@@ -1,0 +1,39 @@
+spec_version: 1
+name: email_triage_env
+type: space
+runtime: fastapi
+app: server.app:app
+port: 8000
+
+metadata:
+  title: Email Triage Environment
+  description: >
+    An environment for triaging emails. Supports spam detection,
+    department routing, and urgency classification.
+  author: Adwait Mulay
+  hf_username: Adwait07
+  version: 1.0.0
+
+tasks:
+  - id: spam_detection
+    name: Spam Detection
+    difficulty: easy
+    description: >
+      Given an email, detect whether it is spam or not.
+    reward_threshold: 0.8
+
+  - id: department_routing
+    name: Department Routing
+    difficulty: medium
+    description: >
+      Given a legitimate email, route it to the correct department:
+      billing, support, sales, hr, or other.
+    reward_threshold: 0.8
+
+  - id: full_triage
+    name: Full Triage
+    difficulty: hard
+    description: >
+      Given an email, perform full triage: detect spam, route to department,
+      and classify urgency (low, medium, high).
+    reward_threshold: 0.8
