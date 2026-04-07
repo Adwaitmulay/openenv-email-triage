@@ -5,8 +5,8 @@ from openai import OpenAI
 
 app = FastAPI()
 
-API_BASE_URL = os.environ.get("API_BASE_URL")
-API_KEY = os.environ.get("API_KEY")
+API_BASE_URL = os.environ["API_BASE_URL"]
+API_KEY = os.environ["API_KEY"]
 
 client = OpenAI(
     base_url=API_BASE_URL,
@@ -17,8 +17,8 @@ class EmailInput(BaseModel):
     email: str
 
 @app.get("/")
-def root():
-    return {"message": "Email triage running"}
+def home():
+    return {"status": "running"}
 
 @app.post("/reset")
 def reset():
@@ -26,6 +26,7 @@ def reset():
 
 @app.post("/validate")
 def validate(data: EmailInput):
+
     prompt = f"Classify this email: {data.email}"
 
     response = client.chat.completions.create(
@@ -34,6 +35,13 @@ def validate(data: EmailInput):
         max_tokens=50
     )
 
-    return {
-        "result": response.choices[0].message.content
-    }
+    return {"result": response.choices[0].message.content}
+
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+
+if __name__ == "__main__":
+    main()
